@@ -7,7 +7,7 @@ class MedicalUser(User):
         (2, 'Medium'),
         (3, 'Large'),
     )
-    med_id = models.CharField(max_length = 8)
+    med_id = models.CharField(max_length = 8, unique=True)
     phone = models.CharField(max_length = 8)
     specialty = models.IntegerField(choices = SPECIALTIES)
     specialty_desc = models.TextField()
