@@ -4,11 +4,13 @@
   <div class="container">
     <div class="row shadow-lg rounded border border-primary m-1">
       <div class="col-sm card center p-0 border-0 rounded-left">
-        <form class="card-body">
+        {{usr_type}}
+        <form class="card-body" action="{% url 'create' usr_type %}"  method = "post">
+          {% csrf_token %}
           <div class="form-row">
             <div class="form-group text-dark col">
               <label class="font-weight-bold">Nombre</label>
-              <input type="text" class="form-control" placeholder="Ingrese su nombre" autocomplete="off" name="name"
+              <input type="text" class="form-control" placeholder="Ingrese su nombre" autocomplete="off" name="first_name"
                 required>
             </div>
             <div class="form-group text-dark col">
@@ -20,14 +22,8 @@
           <!--Username-->
           <div class="form-group">
             <label class="font-weight-bold">Cédula </label>
-            <input type="text" class="form-control" name="user_id" autocomplete="off"
-              placeholder="Ingrese su número de cédula" required>
-          </div>
-          <!--Username-->
-          <div class="form-group">
-            <label class="font-weight-bold">Usuario</label>
             <input type="text" class="form-control" name="username" autocomplete="off"
-              placeholder="Ingrese su nombre de usuario" required>
+              placeholder="Ingrese su número de cédula" required>
           </div>
           <!--Email-->
           <div class="form-group">
@@ -41,6 +37,32 @@
             <input type="number" class="form-control" name="phone" autocomplete="off"
               placeholder="Ingrese su número de teléfono" required>
           </div>
+          <!--Specialty-->
+          {% if usr_type == "med" %}
+          <!--MedId-->
+          <div class="form-group">
+            <label class="font-weight-bold">Código de médico</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text">MED</span>
+              </div>
+              <input type="number" class="form-control" placeholder="Ingrese su código de médico" name="med_id" autocomplete="off"
+                required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Especialidad médica</label>
+            <select name="specialty" class="form-control">
+              {% for specialty in specialties %}
+              <option value="{{specialty.0}}">{{specialty.1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Descripción del servicio</label>
+            <textarea type="text" class="form-control" name="specialty_desc" required></textarea>
+          </div>
+          {% endif %}
           <!--Password-->
           <div class="form-group">
             <label class="font-weight-bold">Contraseña</label>
@@ -51,15 +73,8 @@
           <div class="form-group">
             <label class="font-weight-bold">Confirmación de contraseña</label>
             <input type="password" class="form-control" name="password_confirm" autocomplete="off"
-              placeholder="Vuelva a Ingreser su contraseña" required>
+              placeholder="Vuelva a ingresar su contraseña" required>
           </div>
-
-
-
-
-          {% if usr_type == "med" %}
-          taquito
-          {% endif %}
           <button type="submit" class="btn btn-lg btn-block btn-primary text-white font-weight-bold">Crear
             usuario</button>
         </form>

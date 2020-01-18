@@ -4,15 +4,13 @@
   <div class="container">
     <div class="row shadow-lg rounded border border-primary m-1">
       <div class="col-sm card center p-0 border-0 rounded-left">
-        <div class="card-header bg-primary text-white font-weight-bold text-center">
-          <h2>Iniciar sesión</h2>
-        </div>
-        <form class="card-body">
+        <form class="card-body" action="{% url 'auth' %}" method = "post">
+          {% csrf_token %}
           <!--Username-->
           <div class="form-group">
-            <label class="font-weight-bold">Usuario</label>
+            <label class="font-weight-bold">Cédula </label>
             <input type="text" class="form-control" name="username" autocomplete="off"
-              placeholder="Ingrese su nombre de usuario" required>
+              placeholder="Ingrese su número de cédula" required>
           </div>
           <!--Password-->
           <div class="form-group">
@@ -20,8 +18,7 @@
             <input type="password" class="form-control" name="password" autocomplete="off"
               placeholder="Ingrese su contraseña" required>
           </div>
-          <button type="submit" class="btn btn-lg btn-block btn-primary text-white font-weight-bold">Iniciar
-            sesión</button>
+          <button type="submit" class="btn btn-lg btn-block btn-primary text-white font-weight-bold">Crear usuario</button>
         </form>
       </div>
     </div>
