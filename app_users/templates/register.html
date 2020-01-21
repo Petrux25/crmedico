@@ -4,14 +4,13 @@
   <div class="container">
     <div class="row shadow-lg rounded border border-primary m-1">
       <div class="col-sm card center p-0 border-0 rounded-left">
-        {{usr_type}}
-        <form class="card-body" action="{% url 'create' usr_type %}"  method = "post">
+        <form class="card-body" action="{% url 'create' usr_type %}" method="post">
           {% csrf_token %}
           <div class="form-row">
             <div class="form-group text-dark col">
               <label class="font-weight-bold">Nombre</label>
-              <input type="text" class="form-control" placeholder="Ingrese su nombre" autocomplete="off" name="first_name"
-                required>
+              <input type="text" class="form-control" placeholder="Ingrese su nombre" autocomplete="off"
+                name="first_name" required>
             </div>
             <div class="form-group text-dark col">
               <label class="font-weight-bold">Apellidos</label>
@@ -46,13 +45,13 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">MED</span>
               </div>
-              <input type="number" class="form-control" placeholder="Ingrese su código de médico" name="med_id" autocomplete="off"
-                required>
+              <input type="number" class="form-control" placeholder="Ingrese su código de médico" name="med_id"
+                autocomplete="off" required>
             </div>
           </div>
           <div class="form-group">
             <label class="font-weight-bold">Especialidad médica</label>
-            <select name="specialty" class="form-control">
+            <select name="specialty" class="form-control" required>
               {% for specialty in specialties %}
               <option value="{{specialty.0}}">{{specialty.1}}</option>
               {% endfor %}
@@ -61,6 +60,18 @@
           <div class="form-group">
             <label class="font-weight-bold">Descripción del servicio</label>
             <textarea type="text" class="form-control" name="specialty_desc" required></textarea>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Provincia</label>
+            <select name="province" class="form-control" required>
+              {% for province in provinces %}
+              <option value="{{province.0}}">{{province.1}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="font-weight-bold">Dirección</label>
+            <textarea type="text" class="form-control" name="address" required></textarea>
           </div>
           {% endif %}
           <!--Password-->
@@ -73,7 +84,7 @@
           <div class="form-group">
             <label class="font-weight-bold">Confirmación de contraseña</label>
             <input type="password" class="form-control" name="password_confirm" autocomplete="off"
-              placeholder="Vuelva a ingresar su contraseña" required>
+              placeholder="Vuelva a ingresar su contraseña" data-match="#inputPassword" required>
           </div>
           <button type="submit" class="btn btn-lg btn-block btn-primary text-white font-weight-bold">Crear
             usuario</button>
