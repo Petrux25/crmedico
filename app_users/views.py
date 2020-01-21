@@ -51,12 +51,31 @@ def log_usr(username, password):
 
 
 def profile(request):
-    usr = getUsrInfo("305060162")
-    print(usr)
-    return render(request, "profile.html")
+    usr = User.objects.filter(username="305060162")[0]
+    usr_info = buildUsrInfo(usr)
+    service = buildMedService(usr)
 
-def getUsrInfo(id):
-    usr=User.objects.filter(username=id)[0]
-    usr = {'username':usr.username, 'first_name':usr.first_name, 'last_name':usr.last_name,'email':usr.email, 'phone':usr.phone.phone, "role":usr.role.role}
+    return render(request, "profile.html", {"usr_info": usr_info, "service": service})
+
+
+def buildUsrInfo(usr):
+    role = usr.role.role
+    usr = {'username': usr.username, 'first_name': usr.first_name, 'last_name': usr.last_name,
+           'email': usr.email, 'phone': usr.phone.phone, "role": role, "role_desc": getTupleVal(UserRoles.ROLES, role)}
     return usr
 
+
+def buildMedService(usr):
+    serv = usr.service
+    med_service = {"med_id": serv.med_id,
+                   "med_abbv": usr.last_name.split(' ')[0],
+                   "specialty": getTupleVal(MedService.SPECIALTIES, serv.specialty),
+                   "specialty_desc": serv.specialty_desc,
+                   "province": getTupleVal(MedService.PROVINCES, serv.province),
+                   "address": serv.address
+                   }
+    return med_service
+
+
+def getTupleVal(tup, index):
+    return tup[index-1][1]

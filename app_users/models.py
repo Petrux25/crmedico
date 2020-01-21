@@ -56,3 +56,6 @@ class MedService(models.Model):
     )
     province = models.IntegerField(choices=PROVINCES, default=1)
     address = models.TextField()
+    
+
+    
