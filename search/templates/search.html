@@ -1,6 +1,52 @@
-{% if meds %}
-    {% for med in meds %}
-        <p>{{ med.specialty }}</p>
-    {% endfor %}
-{% endif %}
-{%if page_number=='1'%}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    {% if meds %}
+        {% for med in meds %}
+            <div class="row">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Dr.{{med.first_name}} {{med.last_name}}</h5>
+                            <p class="card-text"><strong>{{ med.service.get_specialty_display }}</strong></p>
+                            <a href="#" class="btn btn-primary">Ir al perfil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %} 
+    {% endif %} 
+</div>
+
+<div class="container">
+    <div class="row justify-content-md-center fixed-bottom">
+        <div class="col">
+            <nav class="d-flex">
+                <ul class="pagination m-auto">
+                    {% if page_number > 1 %}
+                      <li class="page-item {%if page_number == 1%} disabled{% endif %}" >
+                      <a class="page-link" href="{%url 'search:search' prev %}">Anterior</a>
+                      </li>
+                      <li class="page-item"><a class="page-link" href="{%url 'search:search' prev %}">{{prev}}</a></li>
+                      {%endif%}
+                  <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                      {{page_number}}
+                      <span class="sr-only">(current)</span>
+                    </span>
+                  </li>
+                  {% if size == 10 %}
+                      <li class="page-item"><a class="page-link" href="{%url 'search:search' next %}">{{next}}</a></li>
+                      <li class="page-item">
+                      <a class="page-link" href="{%url 'search:search' next %}">Siguiente</a>
+                      </li>
+                  {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+{%endblock content%}
