@@ -1,16 +1,19 @@
-// $.ajax({
-//     type: "POST",
-//     url: 'ajax/waypoints',
-//     data: {
-//         'lat': $("#lat").val(),
-//         'lng': $("#lng").val(),
-//         'csrfmiddlewaretoken': csrfmiddlewaretoken
-//     },
-//     dataType: 'json',
-//     success: function (routes) {
-//       routes.forEach(route => {
-//         showRoute(route)
-//       });
-      
-//     }
-// });
+$(document).ready(() => {
+  $("#add-time").click(() => {
+    let csrfmiddlewaretoken = $("[name=csrfmiddlewaretoken]").val();
+    $.ajax({
+      type: "POST",
+      url: "ajax/time",
+      data: {
+        time: $("#time").val(),
+        username: $("#username").val(),
+        csrfmiddlewaretoken: csrfmiddlewaretoken
+      },
+      dataType: "json",
+      success: function(response) {
+        $("#times").append(`<li class="list-group-item">${response.time}</li>`)
+      }
+    });
+  });
+});
+
