@@ -4,7 +4,8 @@ from .models import MedService, UserRoles, UserPhones
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.contrib.auth import authenticate, login, logout
-
+from django.http import JsonResponse
+from reservations.models import *
 
 def register(request, usr_type):
     specialties = MedService.SPECIALTIES
@@ -63,4 +64,24 @@ def user_logout(request):
     return redirect('users:login')
 
 def edit_profile(request, username):
-    return render(request,'edit_profile.html')
+    u = User.objects.filter(username=username)[0]
+    try:
+        if u:
+            times = u.schedule.times.all()
+        return render(request,'edit_profile.html', {'times': times, 'username': username})
+    except:
+        s = Schedule(med = u)
+        s.save()
+        return render(request,'edit_profile.html', {'times': [], 'username': username})
+
+
+def create_time(request):
+    username = request.POST.get('username')
+    time = request.POST.get('time')
+    u = User.objects.filter(username=username)[0]
+    t = Time(time=time, schedule=u.schedule)
+    t.save()
+    data = {
+        'time': t.time
+    }
+    return JsonResponse(data)

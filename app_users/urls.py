@@ -7,6 +7,7 @@ urlpatterns = [
     path('register/<usr_type>', views.register, name="register"),
     path('profile/<username>', views.profile, name="profile"),
     path('edit_profile/<username>', views.edit_profile, name="edit_profile"),
+    path('edit_profile/ajax/time', views.create_time, name="create_time"),
     path('login', views.login_page, name="login"),
     path('authenticate', views.auth, name="authenticate"),
 ]
