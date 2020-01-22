@@ -11,7 +11,7 @@ def result(request, page_number=1):
     description = request.GET['description']
     province = request.GET['province']
     specialty = request.GET['specialty']
-    variables = {'description': description, 'province': province, 'specialty':specialty}
+    variables = {'specialty_desc__contains': description, 'province': province, 'specialty':specialty}
     arguments = {}
     for k, v in variables.items():
         if v:

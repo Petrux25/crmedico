@@ -9,7 +9,9 @@
                         <div class="card-body">
                             <h5 class="card-title">Dr.{{med.first_name}} {{med.last_name}}</h5>
                             <p class="card-text"><strong>{{ med.service.get_specialty_display }}</strong></p>
-                            <a href="#" class="btn btn-primary">Ir al perfil</a>
+                            <p class="card-text">{{ med.service.get_province_display }}</p>
+                            <p class="card-text">{{ med.service.specialty_desc }}</p>
+                            <a href="{% url 'users:profile' med.username %}" class="btn btn-primary">Ir al perfil</a>
                         </div>
                     </div>
                 </div>
