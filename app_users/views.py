@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from reservations.models import *
 
+
 def register(request, usr_type):
     specialties = MedService.SPECIALTIES
     provinces = MedService.PROVINCES
@@ -87,3 +88,5 @@ def create_time(request):
         'time': t.time
     }
     return JsonResponse(data)
+
+
