@@ -69,8 +69,9 @@
         </div>
         <div class="row">
           <div class="col-sm mt-2 d-flex">
-            <button class="btn btn-primary btn-lg font-weight-bold m-auto">
-              <span class="fas fa-calendar-check"></span> Reservar</button>
+            <a class="btn btn-primary btn-lg font-weight-bold m-auto"
+              href="{% url 'reservations:create' usr_info.username %}"><span
+                class="fas fa-calendar-check"></span>Reservar</a>
           </div>
         </div>
 

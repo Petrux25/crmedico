@@ -22,4 +22,5 @@ class Appointments(models.Model):
     date = models.TextField()
     time = models.ForeignKey(Time, on_delete=models.CASCADE, related_name='appointment')
     reserved = models.BooleanField(default=False)
+    med = models.ForeignKey(User, on_delete=models.CASCADE, related_name='med', default=None)
     patient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointment')
