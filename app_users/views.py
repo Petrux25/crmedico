@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import UserForm
 from .models import MedService, UserRoles, UserPhones
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate
 from django.core import serializers
 
 
@@ -16,7 +17,9 @@ def create(request, usr_type):
     user_role = 2 if is_user_med else 1
     form = UserForm(request.POST)
     if form.is_valid():
-        user_instance = form.save()
+        user_instance = form.save(commit=False)
+        user_instance.set_password(request.POST['password'])
+        user_instance.save()
         phone_instance = UserPhones(
             user=user_instance, phone=request.POST['phone'])
         phone_instance.save()
@@ -37,45 +40,17 @@ def login(request):
 
 
 def auth(request):
-    can_login = log_usr(request.POST['username'], request.POST['password'])
-    if can_login:
+    logged_user = authenticate(
+        username=request.POST['username'], password=request.POST['password'])
+    if logged_user is not None:
         print("Signed in")
     else:
         print("Not signed in")
 
-    return redirect('login')
+    return redirect('users:login')
 
 
-def log_usr(username, password):
-    return User.objects.filter(username=username, password=password).exists()
-
-
-def profile(request):
-    usr = User.objects.filter(username="305060162")[0]
-    usr_info = buildUsrInfo(usr)
-    service = buildMedService(usr)
-
+def profile(request, username):
+    usr_info = User.objects.filter(username=username)[0]
+    service = usr_info.service
     return render(request, "profile.html", {"usr_info": usr_info, "service": service})
-
-
-def buildUsrInfo(usr):
-    role = usr.role.role
-    usr = {'username': usr.username, 'first_name': usr.first_name, 'last_name': usr.last_name,
-           'email': usr.email, 'phone': usr.phone.phone, "role": role, "role_desc": getTupleVal(UserRoles.ROLES, role)}
-    return usr
-
-
-def buildMedService(usr):
-    serv = usr.service
-    med_service = {"med_id": serv.med_id,
-                   "med_abbv": usr.last_name.split(' ')[0],
-                   "specialty": getTupleVal(MedService.SPECIALTIES, serv.specialty),
-                   "specialty_desc": serv.specialty_desc,
-                   "province": getTupleVal(MedService.PROVINCES, serv.province),
-                   "address": serv.address
-                   }
-    return med_service
-
-
-def getTupleVal(tup, index):
-    return tup[index-1][1]
