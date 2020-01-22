@@ -6,9 +6,9 @@
       <div class="container">
         <div class="container d-flex">
           <div class="m-auto text-center p-5">
-            <img class="border border-primary" src="https://ibb.co/ZfwN0K9"  width="200" height="200">
-            <h2 class="card-title font-weight-bold mt-2">Dr. test </h2>
-            <h5 class="card-text">Especialidad</h4>
+            <img class="border border-primary" src="https://ibb.co/ZfwN0K9" width="200" height="200">
+            <h2 class="card-title font-weight-bold mt-2">Dr. {{usr_info.last_name}} </h2>
+            <h5 class="card-text">{{service.get_specialty_display}}</h4>
           </div>
         </div>
       </div>
@@ -19,10 +19,10 @@
               <h5 class="text-primary"><b>Información personal </b></h5>
             </div>
             <div class="row pl-2">
-              <label><b>Nombre: </b> nombre</label>
+              <label><b>Nombre: </b> {{usr_info.first_name}} {{usr_info.last_name}}</label>
             </div>
             <div class="row pl-2">
-              <label><b>Identificación médica: </b>MED-</label>
+              <label><b>Identificación médica: </b>MED-{{service.med_id}}</label>
             </div>
           </div>
           <div class="m-auto">
@@ -30,47 +30,52 @@
               <h5 class="text-primary"><b>Contacto </b></h5>
             </div>
             <div class="row pl-2">
-              <label><b>Correo electrónico: </b> email</label>
+              <label><b>Correo electrónico: </b> {{usr_info.email}}</label>
             </div>
             <div class="row pl-2">
-              <label><b>Teléfono: </b> teléfono</label>
-            </div>
-          </div>
-          <div class="m-auto">
-            <div class="row pl-2">
-              <h5 class="text-primary"><b>Lugar de atención </b></h5>
-            </div>
-            <div class="row pl-2">
-              <label><b>Provincia: </b>Cartago</label>
-            </div>
-            <div class="row pl-2">
-              <label><b>Dirección: </b>Cartago</label>
+              <label><b>Teléfono: </b> {{usr_info.phone.phone}}</label>
             </div>
           </div>
         </div>
       </div>
-      <div class="container mt-5" style="width: 50.5%;">
+      <div class="container mt-4" style="width: 50.5%;">
         <div class="row ">
           <div class="col-sm">
-            <h5 class="text-primary"><b>Detalle del servicio </b></h5>
+            <h5 class="text-primary"><b>Servicio </b></h5>
+          </div>
+        </div>
+        <div class="row pl-2">
+          <div class="col-sm">
+            <h6 class="text-secondary font-weight-bold mt-2"><b>Lugar de atención </b></h6>
+          </div>
+        </div>
+        <div class="row pl-2 ml-2">
+          <label><b>Provincia: </b>{{service.get_province_display}}</label>
+        </div>
+        <div class="row pl-2 ml-2">
+          <label><b>Dirección: </b><br>{{service.address}}</label>
+        </div>
+        <div class="row pl-2">
+          <div class="col-sm">
+            <h6 class="text-secondary font-weight-bold mt-2"><b>Descripción </b></h6>
           </div>
         </div>
         <div class="row ">
           <div class="col-sm mt-2">
             <label class="form-control m-2">
-              form-control
+              {{service.specialty_desc}}
             </label>
           </div>
         </div>
         <div class="row">
           <div class="col-sm mt-2 d-flex">
-            <button class="btn btn-primary btn-lg font-weight-bold m-auto"><span class="fas fa-calendar-check"></span> Reservar</button>
+            <button class="btn btn-primary btn-lg font-weight-bold m-auto">
+              <span class="fas fa-calendar-check"></span> Reservar</button>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>
- 
 </section>
 {% endblock %}

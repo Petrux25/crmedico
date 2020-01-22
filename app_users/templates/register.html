@@ -4,7 +4,7 @@
   <div class="container">
     <div class="row shadow-lg rounded border border-primary m-1">
       <div class="col-sm card center p-0 border-0 rounded-left">
-        <form class="card-body" action="{% url 'create' usr_type %}" method="post">
+        <form class="card-body" action="{% url 'users:create' usr_type %}" method="post">
           {% csrf_token %}
           <div class="form-row">
             <div class="form-group text-dark col">

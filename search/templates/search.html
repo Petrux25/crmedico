@@ -1,6 +1,31 @@
-{% if meds %}
-    {% for med in meds %}
-        <p>{{ med.specialty }}</p>
-    {% endfor %}
-{% endif %}
-{%if page_number=='1'%}
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Busqueda</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form class="form-inline" action="{% url 'search:result' 1 %}">
+                <input name="description" type="text" class="form-control mb-2 mr-sm-2">
+                <select name="specialty" class="form-control mb-2 mr-sm-2" >
+                    <option value=""></option>
+                    {% for specialty in specialties %}
+                    <option value="{{specialty.0}}">{{specialty.1}}</option>
+                    {% endfor %}
+                </select>
+                <select name="province" class="form-control mb-2 mr-sm-2">
+                    <option value=""></option>
+                    {% for province in provinces %}
+                    <option value="{{province.0}}">{{province.1}}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock content%}

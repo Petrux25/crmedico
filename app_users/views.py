@@ -3,6 +3,7 @@ from .forms import UserForm
 from .models import MedService, UserRoles, UserPhones
 from django.contrib.auth.models import User
 from django.core import serializers
+from django.contrib.auth import authenticate, login, logout
 
 
 def register(request, usr_type):
@@ -16,7 +17,9 @@ def create(request, usr_type):
     user_role = 2 if is_user_med else 1
     form = UserForm(request.POST)
     if form.is_valid():
-        user_instance = form.save()
+        user_instance = form.save(commit=False)
+        user_instance.set_password(request.POST['password'])
+        user_instance.save()
         phone_instance = UserPhones(
             user=user_instance, phone=request.POST['phone'])
         phone_instance.save()
@@ -32,31 +35,33 @@ def create(request, usr_type):
     return render(request, "login.html", {'errors': form.errors})
 
 
-def login(request):
+def login_page(request):
+    if request.user.is_authenticated:
+        print("taquito")
+    else:
+        print("baquito")
     return render(request, "login.html")
 
 
 def auth(request):
-    can_login = log_usr(request.POST['username'], request.POST['password'])
-    if can_login:
+    user = authenticate(
+        username=request.POST['username'], password=request.POST['password'])
+
+    if user is not None:
+        login(request, user)
         print("Signed in")
     else:
         print("Not signed in")
 
-    return redirect('login')
+    return redirect('users:login')
 
 
-def log_usr(username, password):
-    return User.objects.filter(username=username, password=password).exists()
+def profile(request, username):
+    usr_info = User.objects.filter(username=username)[0]
+    service = usr_info.service
+    return render(request, "profile.html", {"usr_info": usr_info, "service": service})
 
 
-def profile(request):
-    usr = getUsrInfo("305060162")
-    print(usr)
-    return render(request, "profile.html")
-
-def getUsrInfo(id):
-    usr=User.objects.filter(username=id)[0]
-    usr = {'username':usr.username, 'first_name':usr.first_name, 'last_name':usr.last_name,'email':usr.email, 'phone':usr.phone.phone, "role":usr.role.role}
-    return usr
-
+def user_logout(request):
+    logout(request)
+    return redirect('users:login')
