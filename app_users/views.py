@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import UserForm
 from .models import MedService, UserRoles, UserPhones
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
 from django.core import serializers
+from django.contrib.auth import authenticate, login, logout
 
 
 def register(request, usr_type):
@@ -35,14 +35,20 @@ def create(request, usr_type):
     return render(request, "login.html", {'errors': form.errors})
 
 
-def login(request):
+def login_page(request):
+    if request.user.is_authenticated:
+        print("taquito")
+    else:
+        print("baquito")
     return render(request, "login.html")
 
 
 def auth(request):
-    logged_user = authenticate(
+    user = authenticate(
         username=request.POST['username'], password=request.POST['password'])
-    if logged_user is not None:
+
+    if user is not None:
+        login(request, user)
         print("Signed in")
     else:
         print("Not signed in")
@@ -54,3 +60,8 @@ def profile(request, username):
     usr_info = User.objects.filter(username=username)[0]
     service = usr_info.service
     return render(request, "profile.html", {"usr_info": usr_info, "service": service})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('users:login')
