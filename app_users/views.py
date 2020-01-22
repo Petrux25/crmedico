@@ -61,3 +61,6 @@ def profile(request, username):
 def user_logout(request):
     logout(request)
     return redirect('users:login')
+
+def edit_profile(request, username):
+    return render(request,'edit_profile.html')
