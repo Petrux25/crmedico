@@ -64,6 +64,7 @@ def user_logout(request):
     return redirect('users:login')
 
 def edit_profile(request):
+    username=request.user.username
     u = User.objects.filter(username=request.user.username)[0]
     try:
         if u:
@@ -72,6 +73,7 @@ def edit_profile(request):
     except:
         s = Schedule(med = u)
         s.save()
+        
         return render(request,'edit_profile.html', {'times': [], 'username': username})
 
 
