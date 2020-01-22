@@ -63,8 +63,8 @@ def user_logout(request):
     logout(request)
     return redirect('users:login')
 
-def edit_profile(request, username):
-    u = User.objects.filter(username=username)[0]
+def edit_profile(request):
+    u = User.objects.filter(username=request.user.username)[0]
     try:
         if u:
             times = u.schedule.times.all()
