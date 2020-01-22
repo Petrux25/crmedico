@@ -31,9 +31,24 @@ class UserPhones(models.Model):
 
 class MedService(models.Model):
     SPECIALTIES = (
-        (1, 'Small'),
-        (2, 'Medium'),
-        (3, 'Large'),
+        (1, 'Anatomía Patológica'),
+        (2, 'Alergología'),
+        (3, 'Cardiología'),
+        (4, 'Dermatología'),
+        (5, 'Endocrinilogía'),
+        (6, 'Gastroenterología'),
+        (7, 'Geriatría'),
+        (8, 'Hematología'),
+        (9, 'Enfermedades infecciosas'),
+        (10, 'Neumología'),
+        (11, 'Neurología'),
+        (12, 'Oftalmología'),
+        (13, 'Otorrinolaringología'),
+        (14, 'Pediatría'),
+        (15, 'Psiquiatría'),
+        (16, 'Rehabilitación'),
+        (17, 'Reumatología'),
+        (18, 'Traumatología')
     )
     med_id = models.CharField(max_length=8, unique=True, default='')
     user = models.OneToOneField(

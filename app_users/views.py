@@ -36,10 +36,6 @@ def create(request, usr_type):
 
 
 def login_page(request):
-    if request.user.is_authenticated:
-        print("taquito")
-    else:
-        print("baquito")
     return render(request, "login.html")
 
 
